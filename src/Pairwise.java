@@ -1,30 +1,35 @@
-import java.util.List;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+package pairwise;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 public class Pairwise {
 
-    public StringBuilder coveringArray;
-    public StringBuilder exhaustiveTests = new StringBuilder();
-    public int len = 2;
-    public static int lineCount = 0;
+    StringBuilder coveringArray = new StringBuilder();
+    StringBuilder exhaustiveTests = new StringBuilder();
+    int len = 2;
+    int lineCount = 0;
 
-    public static void main(String[] args) throws IOException {
+    /**
+     *  Main program driver
+     * @param args  Arugments entered at the command line when running the program.
+     */
+    public static void main(String[] args) {
         Pairwise pairwise = new Pairwise();
         if (pairwise.checkArgLength(args)) {
             pairwise.len = args.length;
 
             pairwise.buildTests(args.length, new StringBuilder());
-            pairwise.coveringArray = pairwise.buildCoveringArray(lineCount);
+            pairwise.coveringArray = pairwise.buildCoveringArray(pairwise.lineCount);
             pairwise.outputCoveringArray();
         }
 
     }
 
+    /**
+     *  Checks the argument lengths
+     * @param args  The args entered at the command prompt
+     * @return  Trut if there are two or more arguments. Else false.
+     */
     public boolean checkArgLength(String[] args) {
         if (args.length < 2) {
             System.out.println("Please enter at least two parameters!");
@@ -34,12 +39,20 @@ public class Pairwise {
         }
     }
 
+    /**
+     *  Prints out the covering array
+     */
     public void outputCoveringArray() {
         System.out.println(coveringArray.toString());
     }
 
 
-    public void buildTests(int depth, StringBuilder output){
+    /**
+     *  Creates a stringbuilder to hold the exhaustive test array
+     * @param depth The number of arguments entered
+     * @param output    The stringbuilder we are building
+     */
+    public void buildTests(int depth, StringBuilder output) {
         String input = "10";
 
         if (depth == 0) {
@@ -58,6 +71,11 @@ public class Pairwise {
 
     }
 
+    /**
+     * Returns the covering array in a stringbuilder
+     * @param lineCount The current Line
+     * @return  Stringbuilder holding the covering Array
+     */
     public StringBuilder buildCoveringArray(int lineCount) {
 
         if (len == 2) {
