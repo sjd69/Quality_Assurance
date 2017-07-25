@@ -1,17 +1,67 @@
+package ass;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Pairwise {
 
     public List<List<Boolean>> coveringArray;
     public int len = 0;
-
-    public static void main(String[] args) {
+	private static final String FILENAME = "ass.txt";
+	private static BufferedWriter bw;
+	private static FileWriter fw;
+	private static int lineCount;
+	
+    public static void main(String[] args) throws IOException {
         Pairwise pairwise = new Pairwise();
         pairwise.len = args.length;
 
+        bw = null;
+		fw = null;
+		fw = new FileWriter(FILENAME);
+		bw = new BufferedWriter(fw);
+
+        lineCount = 0;
+		
         pairwise.generateCombination(args.length, new StringBuffer());
+        
+    	bw.close();
+		fw.close();
+		
+		BufferedReader br = null;
+		FileReader fr = null;
+		
+		fr = new FileReader(FILENAME);
+		br = new BufferedReader(fr);
+		
+		
+		String sCurrentLine;
+		int currLine = 1;
+		
+		while ((sCurrentLine = br.readLine()) != null && currLine <= ((lineCount/2) + 1)) 
+		{
+			System.out.println(sCurrentLine);
+			currLine++;
+		}
+		
+		char z = '0';
+		
+		StringBuffer zeroLine = new StringBuffer();
+		for (int i = 0; i < args.length; i++)
+		{
+			zeroLine.append(z);
+		}
+		
+		System.out.println(zeroLine);
+		
+		br.close();	
+		fr.close();
 
         /*if (pairwise.checkArgLength(args) && pairwise.checkParamTypes(args)) {
             pairwise.len = 0;
@@ -46,10 +96,21 @@ public class Pairwise {
 
     }
 
-    public void generateCombination(int depth, StringBuffer output) {
+    
+    
+    	
+    
+    public void generateCombination(int depth, StringBuffer output) throws IOException {
         String input = "10";
+        
+        
+		
         if (depth == 0) {
-            System.out.println(output);
+            //System.out.println(output);
+            String str = output.toString();
+            bw.write(str);
+            bw.newLine();
+            lineCount++;
         } else {
             for (int i = 0; i < input.length(); i++) {
                 output.append(input.charAt(i));
